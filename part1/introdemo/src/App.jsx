@@ -29,7 +29,14 @@ const App = () => {
   const [clicks, setClicks] = useState({left: 0, right: 0})
   const [allClicks, setAll] = useState([]) 
   const [total, setTotal] = useState(0)
+  const [value, setValue] = useState(0)
   
+  const setToValue = (newValue) => () => {
+    console.log('value now', newValue)
+    setValue(newValue)
+  }
+
+  const helloFunction = (who) => () => console.log("hello", who)
 
   const addLeft = () => {
     const updatedLeft = clicks.left+1
@@ -63,6 +70,18 @@ const App = () => {
         />
         <History
         allClicks={allClicks}/>
+        <div>
+          <button onClick={helloFunction("react")}>hello!</button>
+          <button onClick={helloFunction("you")}>hello!</button>  
+        </div>
+        <div>
+          {value}
+          <button onClick={setToValue(0)}>Reset Value</button>
+          <button onClick={setToValue(100)}>Set 100</button>
+          <button onClick={setToValue(value + 1)}>Value +1</button>
+        </div>
+        
+
       </div>
   )
 }
