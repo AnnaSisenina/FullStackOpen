@@ -76,10 +76,16 @@ const App = () => {
         </div>
         <div>
           {value}
-          <button onClick={setToValue(0)}>Reset Value</button>
-          <button onClick={setToValue(100)}>Set 100</button>
-          <button onClick={setToValue(value + 1)}>Value +1</button>
-        </div>
+          <Button
+          text="Reset Value"
+          onClick={setToValue(0)} />
+          <Button
+          text="Set 100"
+          onClick={setToValue(100)}/>
+          <Button
+          text="Value +1"
+          onClick={setToValue(value + 1)}/>
+          </div>
         
 
       </div>
