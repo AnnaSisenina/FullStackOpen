@@ -4,7 +4,7 @@ const Display = ({ persons, searchName }) => {
     return (
       <div>
         {persons.map((person) => (
-          <p key={person.id}> {person.name}: {person.phone}</p>
+          <p key={person.id}> {person.name}: {person.number}</p>
         ))}
       </div>
     );
@@ -16,7 +16,7 @@ const Display = ({ persons, searchName }) => {
   return (
     <div>
       {filteredPersons.map((person) => (
-        <p key={person.id}> {person.name}: {person.phone}</p>
+        <p key={person.id}> {person.name}: {person.number}</p>
       ))}
     </div>
   );

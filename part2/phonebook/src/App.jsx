@@ -7,7 +7,7 @@ import SearchPerson from "./components/SearchPerson";
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
-  const [newPhone, setNewPhone] = useState("");
+  const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
 
  const hook = () => {
@@ -23,19 +23,19 @@ const App = () => {
     event.preventDefault();
     const personObject = {
       name: newName,
-      phone: newPhone,
+      number: newNumber,
       id: persons.length + 1,
     };
     if (newName === "") {
       alert("Please fill the name");
     } else if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-    } else if (newPhone === "") {
-      alert("Please fill the phone number");
+      alert(`${newName} is already added to Phonebook`);
+    } else if (newNumber === "") {
+      alert("Please fill the Number number");
     } else {
       setPersons(persons.concat(personObject));
       setNewName("");
-      setNewPhone("");
+      setNewNumber("");
     }
   };
 
@@ -43,8 +43,8 @@ const App = () => {
     setNewName(event.target.value);
   };
 
-  const handlePhoneChange = (event) => {
-    setNewPhone(event.target.value);
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
   };
 
   const handleNameSearch = (event) => {
@@ -65,8 +65,8 @@ const App = () => {
         addPerson={addPerson}
         newName={newName}
         handleNameChange={handleNameChange}
-        newPhone={newPhone}
-        handlePhoneChange={handlePhoneChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
       <Display persons={persons} searchName={searchName} />
