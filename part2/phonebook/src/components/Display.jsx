@@ -1,14 +1,6 @@
 
-const Display = ({ persons, searchName }) => {
-  if (searchName === "") {
-    return (
-      <div>
-        {persons.map((person) => (
-          <p key={person.id}> {person.name}: {person.number}</p>
-        ))}
-      </div>
-    );
-  }
+const Display = ({ persons, searchName, removePerson }) => {
+
   const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(searchName.toLowerCase())
   );
@@ -16,7 +8,11 @@ const Display = ({ persons, searchName }) => {
   return (
     <div>
       {filteredPersons.map((person) => (
-        <p key={person.id}> {person.name}: {person.number}</p>
+        <p key={person.id}>
+          {" "}
+          {person.name}: {person.number}{" "}
+          <button onClick={() => removePerson(person.id)}>Delete</button>
+        </p>
       ))}
     </div>
   );

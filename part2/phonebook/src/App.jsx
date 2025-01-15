@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Display from "./components/Display";
 import AddPersonForm from "./components/AddPersonForm";
 import SearchPerson from "./components/SearchPerson";
+import numberService from "./services/numbers";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,29 +11,37 @@ const App = () => {
   const [searchName, setSearchName] = useState("");
 
  const hook = () => {
-  axios
-  .get('http://localhost:3001/persons')
-  .then(response => {
-    setPersons(response.data)
-  })
+  numberService.getAll().then(initialPersons => {setPersons(initialPersons)})
  }
  useEffect(hook, [])
 
   const addPerson = (event) => {
     event.preventDefault();
+    
     const personObject = {
       name: newName,
-      number: newNumber,
-      id: persons.length + 1,
+      number: newNumber
     };
+
     if (newName === "") {
       alert("Please fill the name");
-    } else if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to Phonebook`);
     } else if (newNumber === "") {
       alert("Please fill the Number number");
+    } else if (persons.some((person) => person.name === newName)) {
+      const userConfirmation = confirm(`${newName} is already added to Phonebook, replace the old number with a new one?`);
+      if (userConfirmation){
+        const person = persons.find(person => person.name === newName)
+        const changedPerson = {...person, number: newNumber}
+        numberService.update(person.id, changedPerson).then(returnedPerson => {
+          setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person))
+        })
+      }
+      setNewName("");
+      setNewNumber("");
     } else {
-      setPersons(persons.concat(personObject));
+      numberService.create(personObject).then(createdPerson => {
+        setPersons(persons.concat(createdPerson))
+      })
       setNewName("");
       setNewNumber("");
     }
@@ -50,6 +58,17 @@ const App = () => {
   const handleNameSearch = (event) => {
     setSearchName(event.target.value);
   };
+
+  const removePerson = (id) => {
+    const person = persons.find((person) => person.id === id)
+    const userConfirmation = confirm(`Delete ${person.name}?`)
+    if (userConfirmation) {
+      numberService.remove(id).then((response) => {
+        setPersons(persons.filter((person) => person.id !== id))
+      });
+    } 
+  };
+
 
   
   return (
@@ -69,7 +88,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Display persons={persons} searchName={searchName} />
+      <Display persons={persons} searchName={searchName} removePerson={removePerson} />
     </div>
   );
 };
