@@ -6,29 +6,28 @@ const App = () => {
   const [newCountry, setNewCountry] = useState("");
   const [countries, setCountries] = useState([]);
 
-   const handleNewCountry = (event) => {
+  const handleNewCountry = (event) => {
     setNewCountry(event.target.value);
   };
 
- const hook = () => {
-  countryService.getAll().then(initialCountries => {setCountries(initialCountries)})
-}
- useEffect(hook, [])
+  const hook = () => {
+    countryService.getAll().then((initialCountries) => {
+      setCountries(initialCountries);
+    });
+  };
+  useEffect(hook, []);
 
- 
-
- 
-  return(
+  return (
     <div>
-    <h1>Get country info</h1>
-   <form action="onSubmit">
-   <p>
-      Country: <input value={newCountry} onChange={handleNewCountry} />
-   </p>
-    <DisplayList countries={countries} searchCountry={newCountry}/>
-   </form>
-  </div>
-  )
-}
+      <h1>Get country info</h1>
+      <form action="onSubmit">
+        <p>
+          Country: <input value={newCountry} onChange={handleNewCountry} />
+        </p>
+        <DisplayList countries={countries} searchCountry={newCountry} />
+      </form>
+    </div>
+  );
+};
 
-export default App
+export default App;
