@@ -1,9 +1,11 @@
 import axios from 'axios'
 
-const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/api/all'
+const api_key = import.meta.env.VITE_WEATHER_API_KEY
 
-const getWeather = () =>{
-    const request = axios.get(baseUrl)
+const baseUrl = 'http://api.weatherapi.com/v1'
+
+const getWeather = (city) =>{
+    const request = axios.get(`${baseUrl}/current.json?key=${api_key}&q=${encodeURIComponent(city)}&aqi=no`)
     return request.then(response => response.data)
 }
 
